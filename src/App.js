@@ -75,6 +75,19 @@ function App() {
   //   setContacts(arrayToBeSorted);
   // }
 
+  const removeContact = (id) => {
+    let filteredArr = contacts.filter((contact) => {
+      return contact.id !== id;
+    });
+
+    let celeb = contacts.find((contact) => {
+      return contact.id === id;
+    });
+
+    setContacts(filteredArr);
+    setRemainingCelebs(remainingCelebs.concat(celeb));
+  };
+
   return (
     <div>
       <button onClick={addContact}>Add Random Contact</button>
@@ -102,6 +115,11 @@ function App() {
               <td>{contact.popularity}</td>
               <td>{contact.wonOscar && "🏆"}</td>
               <td>{contact.wonEmmy && "🏆"}</td>
+              <td>
+                <button onClick={() => removeContact(contact.id)}>
+                  Delete
+                </button>
+              </td>
             </tr>
           );
         })}

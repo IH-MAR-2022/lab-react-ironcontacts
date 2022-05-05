@@ -8,6 +8,8 @@ let theRest = contactsJson.slice(5);
 function App() {
   const [contacts, setContacts] = React.useState(firstFive);
   const [remainingCelebs, setRemainingCelebs] = React.useState(theRest);
+  const [popularAscending, setPopularAscending] = React.useState(true);
+  const [nameAscending, setNameAscending] = React.useState(true);
 
   function addContact() {
     if (remainingCelebs.length > 0) {
@@ -28,9 +30,60 @@ function App() {
     }
   }
 
+  function sortByName() {
+    //sort contacts
+    //sort changes the original array
+    //clone the original state hook array
+    let arrayToBeSorted = [...contacts];
+    console.log(nameAscending);
+
+    if (nameAscending) {
+      arrayToBeSorted.sort((a, b) => {
+        return a.name.localeCompare(b.name);
+      });
+    } else {
+      arrayToBeSorted.sort((a, b) => {
+        return b.name.localeCompare(a.name);
+      });
+    }
+
+    setNameAscending(!nameAscending);
+    setContacts(arrayToBeSorted);
+  }
+
+  function sortByPopularity() {
+    //sort contacts
+    //sort changes the original array
+    //clone the original state hook array
+    let arrayToBeSorted = [...contacts];
+
+    arrayToBeSorted.sort((a, b) => {
+      return String(a.popularity).localeCompare(String(b.popularity));
+      // return a.popularity - b.popularity;
+    });
+
+    setContacts(arrayToBeSorted);
+  }
+
+  // function sortContacts(field) {
+  //   let arrayToBeSorted = [...contacts];
+
+  //   arrayToBeSorted.sort((a, b) => {
+  //     return String(a[field]).localeCompare(String(b[field]));
+  //   });
+
+  //   setContacts(arrayToBeSorted);
+  // }
+
   return (
     <div>
       <button onClick={addContact}>Add Random Contact</button>
+      {/* <button onClick={() => sortContacts("name")}>Sort By Name</button>
+      <button onClick={() => sortContacts("popularity")}>
+        Sort By Popularity
+      </button> */}
+      <button onClick={sortByName}>Sort By Name</button>
+      <button onClick={sortByPopularity}>Sort By Popularity</button>
       <table>
         <tr>
           <th>picture</th>
